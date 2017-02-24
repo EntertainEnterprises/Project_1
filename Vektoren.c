@@ -41,6 +41,7 @@ int main()
     printf("Vektor_3[a] = %f\n", vektor_3[0]);
     printf("Vektor_3[b] = %f\n", vektor_3[1]);
     printf("Vektorbetrag = %f\n", vektor_betrag);
+    printf("");
 
 
 }
