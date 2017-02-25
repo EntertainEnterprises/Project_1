@@ -1,3 +1,5 @@
+//@Author: Patrik Höpfl
+
 #include <stdio.h>
 #include <math.h>
 
