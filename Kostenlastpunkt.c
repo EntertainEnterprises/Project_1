@@ -15,7 +15,7 @@
 
 typedef struct _vektor
 {
-    float vektorkomponent[DIMENSION];  
+    double vektorkomponent[DIMENSION];  
 }Vektor;
 
 Vektor seiten_vektor_berechnung(Vektor bc, Vektor a)
@@ -26,11 +26,11 @@ Vektor seiten_vektor_berechnung(Vektor bc, Vektor a)
     return erg;
 }
 
-float flaechen_berechnung_dreieck(Vektor dreieckseite_1, Vektor dreieckseite_2)
+double flaechen_berechnung_dreieck(Vektor dreieckseite_1, Vektor dreieckseite_2)
 {
-    float kreuzprodukt = 0;
-    float betrag = 0;
-    float flaecheninhalt = 0;
+    double kreuzprodukt = 0;
+    double betrag = 0;
+    double flaecheninhalt = 0;
     kreuzprodukt = dreieckseite_1.vektorkomponent[0] * dreieckseite_2.vektorkomponent[1] - dreieckseite_1.vektorkomponent[1] * dreieckseite_2.vektorkomponent[0];
     if(kreuzprodukt < 0)
     {
@@ -49,22 +49,22 @@ int main()
     Vektor d_eckpunkt[DREIECK+1]; //Eckpunkte des Dreiecks
     Vektor dreieckseitenvektor[DREIECK-1];  //TODO Überprüfung wegen Arraynamen globale Variable
     Vektor viereckseitenvektor[VIERECK-1];  //TODO Überprüfung wegen Arraynamen
-    float flaecheninhalt_u_dreieck = 0;   //Flächeninhalt Urpsrungsdreieck
-    float flaecheninhalt_viereck_d[VIERECK-1] = {0, 0, 0};    //Flaecheninhalt der drei Dreiecke innerhalb des Vierecks
-    float flaecheninhalt_viereck_g = 0;   //Flaecheninhalt des Vierecks gesamt
+    double flaecheninhalt_u_dreieck = 0;   //Flächeninhalt Urpsrungsdreieck
+    double flaecheninhalt_viereck_d[VIERECK-1] = {0, 0, 0};    //Flaecheninhalt der drei Dreiecke innerhalb des Vierecks
+    double flaecheninhalt_viereck_g = 0;   //Flaecheninhalt des Vierecks gesamt
 
     //Berechnung Flächeninhalt Ursprungsdreieck & Viereck bzw. Berechnung der Flächeninhalte der 3 enthaltenen Dreiecke.
     //Schritt 1: Einlesen des zu überprüfenden Punktes:
     printf("Bitte einen Punkt eingeben damit ueberprueft werden kann ob er innerhalb oder ausserhalb des Dreiecks liegt.\n");
-    scanf("%f", &d_eckpunkt[0].vektorkomponent[0]);
-    scanf("%f", &d_eckpunkt[0].vektorkomponent[1]);
+    scanf("%lf", &d_eckpunkt[0].vektorkomponent[0]);
+    scanf("%lf", &d_eckpunkt[0].vektorkomponent[1]);
     
     //Schritt 2: Einlesen der drei Eckpunkte des Urpsrungsdreiecks:
     for(int i = 0; i < DREIECK; i++)
     {
         printf("Bitte geben Sie drei Eckpunkte des Ursprungsdreiecks ein.\n");
-        scanf("%f", &d_eckpunkt[i+1].vektorkomponent[0]);
-        scanf("%f", &d_eckpunkt[i+1].vektorkomponent[1]);
+        scanf("%lf", &d_eckpunkt[i+1].vektorkomponent[0]);
+        scanf("%lf", &d_eckpunkt[i+1].vektorkomponent[1]);
     }
 
     //Schritt 3: Berechnung der Seitenvektoren des Ursprungsdreiecks:
@@ -96,33 +96,33 @@ int main()
     //Ausgabe Eckpunktvektoren Dreieck:
     for(int i = 0; i < DREIECK+1; i++)
     {
-        printf("Eckpunkt %i = (%f, %f)\n", i, d_eckpunkt[i].vektorkomponent[0], d_eckpunkt[i].vektorkomponent[1]);
+        printf("Eckpunkt %i = (%lf, %lf)\n", i, d_eckpunkt[i].vektorkomponent[0], d_eckpunkt[i].vektorkomponent[1]);
     }
     
     //Ausgabe Dreieckseitenvektoren:
     for(int i = 0; i < D_SEITENVEKTOREN_ANZAHL; i++)
     {
-        printf("Dreieckseitenvektor %i = (%f, %f)\n", i, dreieckseitenvektor[i].vektorkomponent[0], dreieckseitenvektor[i].vektorkomponent[1]);
+        printf("Dreieckseitenvektor %i = (%lf, %lf)\n", i, dreieckseitenvektor[i].vektorkomponent[0], dreieckseitenvektor[i].vektorkomponent[1]);
     }
 
     //Ausgabe Flaecheninhalt Ursprungsdreieck:
-    printf("Flaecheninhalt Ursprung Dreieck: %f\n", flaecheninhalt_u_dreieck);
+    printf("Flaecheninhalt Ursprung Dreieck: %lf\n", flaecheninhalt_u_dreieck);
 
     //Ausgabe Viereckseitenvektoren:
     for(int i = 0; i < V_SEITENVEKTOREN_ANZAHL; i++)
     {
-        printf("Viereckseitenvektor %i = (%f, %f)\n", i, viereckseitenvektor[i].vektorkomponent[0], viereckseitenvektor[i].vektorkomponent[1]);
+        printf("Viereckseitenvektor %i = (%lf, %lf)\n", i, viereckseitenvektor[i].vektorkomponent[0], viereckseitenvektor[i].vektorkomponent[1]);
     }
     
 
     //Ausgabe Flächeninhalte der zwei Dreiecke innerhalb des Vierecks:
     for(int i = 0; i < VIERECK-1; i++)
     {
-        printf("Flaecheninhalt %i. Dreieck im Viereck: %f\n", i, flaecheninhalt_viereck_d[i]);
+        printf("Flaecheninhalt %i. Dreieck im Viereck: %lf\n", i, flaecheninhalt_viereck_d[i]);
     }
   
     //Ausgabe Flächeninhalt Viereck gesamt:
-    printf("Flaecheninhalt des Vierecks: %f\n", flaecheninhalt_viereck_g);
+    printf("Flaecheninhalt des Vierecks: %lf\n", flaecheninhalt_viereck_g);
 
 
     //Überprüfung ob Punkt im Dreieck oder ausserhalb liegt:
