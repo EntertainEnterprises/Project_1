@@ -22,6 +22,22 @@ Vektor seiten_vektor_berechnung(Vektor bc, Vektor a)
     return erg;
 }
 
+int file_zeilen_berechnung(FILE* datei, char* dateiname)
+{
+
+    int counter = 0;
+    char c;
+    while ((c = fgetc(datei)) != EOF)
+    if (c == '\n') 
+    {
+        counter++;
+    }
+    fclose(datei);
+    fopen(dateiname, "r");
+    return counter;
+}
+
+
 double flaechen_berechnung_dreieck(Vektor dreieckseite_1, Vektor dreieckseite_2)
 {
     double kreuzprodukt = 0;
@@ -44,7 +60,7 @@ int main()
 {
     
    
-    FILE* punkte_zuordnung = fopen("Punkte_zuordnung.csv", "w");
+    
 
     Vektor d_eckpunkt[4]; //Eckpunkte des Dreiecks
     Vektor dreieckseitenvektor[2];  //TODO Überprüfung wegen Arraynamen globale Variable
@@ -56,20 +72,35 @@ int main()
     int counter_s_1 = 0;
     int counter_s_2 = 0;
     char error[30] = "ausserhalb Patrik_Loesung";
+    int zeilen_datei_punkte = 0;
+    int zeilen_datei_eckpunkte = 0;
+    char* datei_erg = "Punkte_zuordnung.csv";
+    char* datei_neue_punkte = "EAF_Testpunkte.csv";
+    char* datei_eckpunkte = "EAF_Testdreiecke.csv";
+
+    FILE* punkte_zuordnung = fopen(datei_erg, "w");
 
     //Berechnung Flächeninhalt Ursprungsdreieck & Viereck bzw. Berechnung der Flächeninhalte der 3 enthaltenen Dreiecke.
     //Schritt 1: Einlesen des zu überprüfenden Punktes:
     
     //1. Schleife: So viele Wdh. wie "neue Punkte" in CSV-Datei
-    FILE* neue_punkte = fopen("EAF_Testpunkte.csv", "r");
-    for(int a = 0; a < 10; a++)
+    FILE* neue_punkte = fopen(datei_neue_punkte, "r");
+    zeilen_datei_punkte = file_zeilen_berechnung(neue_punkte, datei_neue_punkte);
+    
+    printf("Zeilen Datei Punkte :%i \n", zeilen_datei_punkte);
+    
+    for(int a = 0; a < zeilen_datei_punkte; a++)
     {
         printf("Der neue Punkte wurde aus der CSV-Datei gelesen\n");
         fscanf(neue_punkte, "%lf; %lf\n", &d_eckpunkt[0].vektorkomponent[0], &d_eckpunkt[0].vektorkomponent[1]);
         counter_s_2 = 0;
         //2. Schleife: So viele Wdh. wie Eckpunkte in CSV-Datei.
-        FILE* eckpunkte = fopen("EAF_Testdreiecke.csv", "r");
-        for(int b = 0; b < 11; b++)
+        FILE* eckpunkte = fopen(datei_eckpunkte, "r");
+        zeilen_datei_eckpunkte = file_zeilen_berechnung(eckpunkte, datei_eckpunkte) / 3;// Durch 3 wegen Dreiecke, muss angepasst werden.
+        printf("Zeilen Datei Eckpunkte :%i \n", zeilen_datei_eckpunkte);
+        
+        
+        for(int b = 0; b < zeilen_datei_eckpunkte; b++)
         {
             //Schritt 2: Einlesen der drei Eckpunkte des Urpsrungsdreiecks:
             for(int i = 0; i < 3; i++)
